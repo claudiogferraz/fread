@@ -11,7 +11,7 @@ chosen text will appear on the screen.
 
 Doing that for around an hour every day helped me "learn" speed reading and 
 while I can't absolutely guarantee it'll work for you (had to include this part 
-for legal reasons lol), I deffinitely think you should give this a try.
+for legal reasons lol), I definitely think you should give this a try.
 
 In my experience it also translated pretty well to paper reading as I (at some 
 point) stopped mentally "voicing" it.
