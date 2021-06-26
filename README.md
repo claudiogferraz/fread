@@ -1,7 +1,8 @@
 # Fread
 
 [![JavaScript](https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge)](#)
-[![GJS](https://img.shields.io/badge/GJS-blue?style=for-the-badge)](#)[![GTK4](https://img.shields.io/badge/GTK-4-black?style=for-the-badge)](#)
+[![GJS](https://img.shields.io/badge/GJS-blue?style=for-the-badge)](#)
+[![GTK4](https://img.shields.io/badge/GTK-4-black?style=for-the-badge)](#)
 [![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](#)
 
 Fread is an Open Source GTK app that can assist you at improving your reading 
