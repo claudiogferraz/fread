@@ -15,6 +15,9 @@ for legal reasons lol), I deffinitely think you should give this a try.
 
 In my experience it also translated pretty well to paper reading as I (at some 
 point) stopped mentally "voicing" it.
+
+**THIS IS STILL IN EARLY STAGES OF DEVELOPMENT**
+
 ## Authors
 
 - [@gomescodes](https://www.github.com/gomescodes)
