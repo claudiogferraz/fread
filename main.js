@@ -24,7 +24,6 @@ app.connect('activate', () => {
   
   let text = new Gtk.Label();
   text.set_text("Salve salve fml.")
-  text.scale.set_value("2");
   
   window.set_child(text);
   window.present();
