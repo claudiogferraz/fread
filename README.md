@@ -1,5 +1,7 @@
 # Fread
 
+<img src="https://github.com/gomescodes/fread/blob/main/assets/icon.png" width=360 height=360></img>
+
 [![JavaScript](https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge)](#)
 [![GJS](https://img.shields.io/badge/GJS-blue?style=for-the-badge)](#)
 [![GTK4](https://img.shields.io/badge/GTK-4-black?style=for-the-badge)](#)
