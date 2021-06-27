@@ -22,14 +22,12 @@ point) stopped mentally "voicing" it.
 
 - [@gomescodes](https://www.github.com/gomescodes)
 
-  
 ## Contributing
 
 Contributions are always welcome!
 
 Just send a commit and I'll approve if it works and fits the project.
 
-  
 ## Tech Stack
 
 - JavaScript / GJS
