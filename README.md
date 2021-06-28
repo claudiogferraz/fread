@@ -5,7 +5,7 @@
   <img alt="GJS" src="https://img.shields.io/badge/GJS-blue?style=for-the-badge" />
   <img alt="GTK4" src="https://img.shields.io/badge/GTK-4-black?style=for-the-badge" />
   <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
-  <br><br>
+  <br>
 </div>
 
 ## About
