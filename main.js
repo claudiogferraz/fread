@@ -23,10 +23,17 @@ app.connect('activate', () => {
   window.set_titlebar(header);
   
   let text = new Gtk.Label();
-  text.set_text("Salve salve fml.")
+  text.set_text("Example text");
+
+  let textAttr = new Pango.AttrList();
+  textAttr.insert(Pango.attr_scale_new(3));
+
+  text.attributes = textAttr;
   
   window.set_child(text);
   window.present();
 });
 
 app.run([]);
+
+gtk_label_set_markup (GTK_LABEL (label), "<small>Small text</small>");
