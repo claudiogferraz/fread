@@ -1,4 +1,5 @@
 <div align="center">
+  <br>
   <img src="https://github.com/gomescodes/fread/blob/main/assets/logo.svg" width=360></img>
   <br><br>
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge" />
