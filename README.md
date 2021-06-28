@@ -1,14 +1,15 @@
 <div align="center">
-  <h1>Fread</h1>
   <img src="https://github.com/gomescodes/fread/blob/main/assets/logo.svg" width=360></img>
-  <br>
+  <br><br>
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge" />
   <img alt="GJS" src="https://img.shields.io/badge/GJS-blue?style=for-the-badge" />
   <img alt="GTK4" src="https://img.shields.io/badge/GTK-4-black?style=for-the-badge" />
   <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
   <br><br>
 </div>
-  
+
+## About
+
 Fread is an Open Source GTK app that can assist you at improving your reading 
 speed by letting you gradually lower the interval in which the words from a 
 chosen text will appear on the screen.  
