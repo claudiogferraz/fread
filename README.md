@@ -1,19 +1,21 @@
-# Fread
-
-<img src="https://github.com/gomescodes/fread/blob/main/assets/icon.png" width=360></img>
-
-[![JavaScript](https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge)](#)
-[![GJS](https://img.shields.io/badge/GJS-blue?style=for-the-badge)](#)
-[![GTK4](https://img.shields.io/badge/GTK-4-black?style=for-the-badge)](#)
-[![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](#)
-
+<div align="center">
+  <h1>Fread</h1>
+  <img src="https://github.com/gomescodes/fread/blob/main/assets/icon.png" width=360></img>
+  <br>
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge" />
+  <img alt="GJS" src="https://img.shields.io/badge/GJS-blue?style=for-the-badge" />
+  <img alt="GTK4" src="https://img.shields.io/badge/GTK-4-black?style=for-the-badge" />
+  <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
+  <br><br>
+</div>
+  
 Fread is an Open Source GTK app that can assist you at improving your reading 
 speed by letting you gradually lower the interval in which the words from a 
-chosen text will appear on the screen.
+chosen text will appear on the screen.  
 
 Doing that for around an hour every day helped me "learn" speed reading and 
 while I can't absolutely guarantee it'll work for you (had to include this part 
-for legal reasons lol), I definitely think you should give this a try.
+for legal reasons lol), I definitely think you should give this a try.  
 
 In my experience it also translated pretty well to paper reading as I (at some 
 point) stopped mentally "voicing" it.
