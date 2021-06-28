@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Fread</h1>
-  <img src="https://github.com/gomescodes/fread/blob/main/assets/icon.png" width=360></img>
+  <img src="https://github.com/gomescodes/fread/blob/main/assets/logo.svg" width=360></img>
   <br>
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge" />
   <img alt="GJS" src="https://img.shields.io/badge/GJS-blue?style=for-the-badge" />
