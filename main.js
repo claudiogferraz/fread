@@ -13,6 +13,7 @@ app.connect('activate', () => {
     defaultWidth: 600
   });
 
+  // Example of how click interactions can be used:
   // let btn = new Gtk.Button({ label: 'Close dis' });
   // btn.connect('clicked', () => { win.close(); });
   
@@ -22,15 +23,16 @@ app.connect('activate', () => {
   
   window.set_titlebar(header);
   
-  let text = new Gtk.Label();
-  text.set_text("Example text");
+  let activeWord = new Gtk.Label();
+  activeWord.add_css_class("title-1");
+  activeWord.set_text("Welcome!");
 
-  let textAttr = new Pango.AttrList();
-  textAttr.insert(Pango.attr_scale_new(3));
-
-  text.attributes = textAttr;
+  // Another way of making the text bigger:
+  // let textAttr = new Pango.AttrList();
+  // textAttr.insert(Pango.attr_scale_new(3));
+  // text.attributes = textAttr;
   
-  window.set_child(text);
+  window.set_child(activeWord);
   window.present();
 });
 
