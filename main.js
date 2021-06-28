@@ -35,5 +35,3 @@ app.connect('activate', () => {
 });
 
 app.run([]);
-
-gtk_label_set_markup (GTK_LABEL (label), "<small>Small text</small>");
