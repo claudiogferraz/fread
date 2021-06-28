@@ -12,6 +12,7 @@ app.connect('activate', () => {
     defaultWidth: 600
   });
 
+  let defaultPhrase = "Press play to start reading";
   let isReading = false;
   let wordsArr = ["First", "Second", "Third"];
   let activeWordPos = -1;
@@ -29,8 +30,8 @@ app.connect('activate', () => {
       goForward();
     } else if (isReading === false && activeWordPos === wordsArr.length-1) {
       // this means he read everything and clicked to go "restart" the text
-      activeWordPos = 0
-      activeWord.set_text(wordsArr[activeWordPos]);
+      activeWordPos = -1;
+      activeWord.set_text(defaultPhrase);
     } else {
       isReading = false;
     }
@@ -43,7 +44,12 @@ app.connect('activate', () => {
 
       activeWord.set_text(wordsArr[activeWordPos]);
 
-      GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(wordsPerMinute/60), goForward);  
+      if (activeWordPos !== wordsArr.length-1) {
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(wordsPerMinute/60), goForward);  
+      } else {
+        isReading = false;
+      }
+
     } else {
       isReading = false;
     }
@@ -56,7 +62,7 @@ app.connect('activate', () => {
   
   let activeWord = new Gtk.Label();
   activeWord.add_css_class("title-1");
-  activeWord.set_text("Welcome!");
+  activeWord.set_text(defaultPhrase);
 
   // Another way of making the text bigger:
   // let textAttr = new Pango.AttrList();
