@@ -4,73 +4,80 @@ const { Gtk, GLib } = imports.gi;
 let app = new Gtk.Application({ application_id: 'codes.gomes.gready' });
 
 app.connect('activate', () => {
-  
-  let appWindow = new Gtk.ApplicationWindow({
-    application: app,
-    title: "Fread",
-    defaultHeight: 400,
-    defaultWidth: 600
-  });
 
-  let defaultPhrase = "Press play to start reading";
+  // Application default variables
+  let defaultPhrase = "Press play when you're ready";
   let isReading = false;
-  let wordsArr = ["First", "Second", "Third"];
-  let activeWordPos = -1;
+  let words = ["No", "text", "selected"];
+  let renderedWordPos = -1;
   let wordsPerMinute = 200;
 
-  // Example of how click interactions can be used:
-  // let btn = new Gtk.Button({ label: 'Close dis' });
-  // btn.connect('clicked', () => { win.close(); });
-  
-  let header = new Gtk.HeaderBar();
-  let startButton = new Gtk.Button({ iconName: "media-playback-start-symbolic" });
-  startButton.connect('clicked', () => {
-    if (isReading === false && activeWordPos !== wordsArr.length-1) {
-      isReading = true;
-      goForward();
-    } else if (isReading === false && activeWordPos === wordsArr.length-1) {
-      // this means he read everything and clicked to go "restart" the text
-      activeWordPos = -1;
-      activeWord.set_text(defaultPhrase);
-    } else {
-      isReading = false;
-    }
-  })
+  const startReading = () => {
+    isReading = true;
+    goForward();
+    startButton.set_icon_name("media-playback-pause-symbolic");
+    startButton.disconnect(startButtonClick);
+    startButtonClick = startButton.connect('clicked', pauseReading);
+  }
+
+  const pauseReading = () => {
+    isReading = false;
+    startButton.set_icon_name("media-playback-start-symbolic");
+    startButton.disconnect(startButtonClick);
+    startButtonClick = startButton.connect('clicked', startReading);
+  }
+
+  const resetReading = () => {
+    pauseReading();
+    renderedWordPos = -1;
+    renderedWord.set_text(defaultPhrase);
+  }
 
   const goForward = () => {
-    if (activeWordPos !== wordsArr.length-1 && isReading === true) {
+    if (renderedWordPos !== words.length-1 && isReading === true) {
+      
+      renderedWordPos++;
+      renderedWord.set_text(words[renderedWordPos]);
 
-      activeWordPos++;
-
-      activeWord.set_text(wordsArr[activeWordPos]);
-
-      if (activeWordPos !== wordsArr.length-1) {
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(wordsPerMinute/60), goForward);  
+      if (renderedWordPos === words.length-1) {
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(wordsPerMinute/60), resetReading);
       } else {
-        isReading = false;
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(wordsPerMinute/60), goForward);
       }
-
     } else {
       isReading = false;
     }
 
   }
 
-  header.pack_start(startButton);
-  
-  appWindow.set_titlebar(header);
-  
-  let activeWord = new Gtk.Label();
-  activeWord.add_css_class("title-1");
-  activeWord.set_text(defaultPhrase);
+  let startButton = new Gtk.Button({ iconName: "media-playback-start-symbolic" });
+  let startButtonClick = startButton.connect('clicked', startReading);
 
-  // Another way of making the text bigger:
-  // let textAttr = new Pango.AttrList();
-  // textAttr.insert(Pango.attr_scale_new(3));
-  // text.attributes = textAttr;
+  let resetButton = new Gtk.Button({ iconName: "edit-undo-symbolic" });
+  let resetButtonClick = resetButton.connect('clicked', resetReading);
+
+  let buttonBox = new Gtk.Box();
+  buttonBox.add_css_class("linked");
+  buttonBox.append(startButton);
+  buttonBox.append(resetButton);
+
+  let renderedWord = new Gtk.Label();
+  renderedWord.add_css_class("large-title");
+  renderedWord.set_text(defaultPhrase);
   
-  appWindow.set_child(activeWord);
+  let header = new Gtk.HeaderBar();
+  header.pack_start(buttonBox);
+
+  let appWindow = new Gtk.ApplicationWindow({
+    application: app,
+    title: "Fread",
+    defaultHeight: 400,
+    defaultWidth: 600
+  });
+  appWindow.set_titlebar(header);
+  appWindow.set_child(renderedWord);
   appWindow.present();
+
 });
 
 app.run([]);
