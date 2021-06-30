@@ -5,78 +5,105 @@ let app = new Gtk.Application({ application_id: 'codes.gomes.gready' });
 
 app.connect('activate', () => {
 
-  // Application default variables
-  let defaultPhrase = "Press play when you're ready";
-  let isReading = false;
-  let words = ["No", "text", "selected"];
-  let renderedWordPos = -1;
-  let wordsPerMinute = 200;
-
-  const startReading = () => {
-    isReading = true;
-    goForward();
-    startButton.set_icon_name("media-playback-pause-symbolic");
-    startButton.disconnect(startButtonClick);
-    startButtonClick = startButton.connect('clicked', pauseReading);
+  let state = {
+    defaultPhrase: "Press play when you're ready",
+    isReading: 0,
+    textWords: ["No", "text"],
+    renderedTextPos: -1,
+    wordsPerMinute: 200
   }
 
-  const pauseReading = () => {
-    isReading = false;
-    startButton.set_icon_name("media-playback-start-symbolic");
-    startButton.disconnect(startButtonClick);
-    startButtonClick = startButton.connect('clicked', startReading);
+  let header = () => {
+    let textButton = new Gtk.Button({label: "Edit Text"});
+    let header = new Gtk.HeaderBar();
+    header.pack_start(textButton);
+    return header;
   }
 
-  const resetReading = () => {
-    pauseReading();
-    renderedWordPos = -1;
-    renderedWord.set_text(defaultPhrase);
+  let text = () => {
+    let text = new Gtk.Label({vexpand: true});
+    text.add_css_class("large-title");
+    text.set_text(state.defaultPhrase);
+    return text;
   }
 
-  const goForward = () => {
-    if (renderedWordPos !== words.length-1 && isReading === true) {
-      
-      renderedWordPos++;
-      renderedWord.set_text(words[renderedWordPos]);
+  let controls = (renderedText) => {
+    let controls = new Gtk.Box();
+    controls.add_css_class("linked");
 
-      if (renderedWordPos === words.length-1) {
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(wordsPerMinute/60), resetReading);
-      } else {
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(wordsPerMinute/60), goForward);
-      }
-    } else {
-      isReading = false;
+    const startReading = () => {
+      state.isReading = true;
+      readingLoop();
+      startButton.set_icon_name("media-playback-pause-symbolic");
+      startButton.disconnect(startButtonClick);
+      startButtonClick = startButton.connect('clicked', pauseReading);
     }
 
+    const pauseReading = () => {
+      state.isReading = false;
+      startButton.set_icon_name("media-playback-start-symbolic");
+      startButton.disconnect(startButtonClick);
+      startButtonClick = startButton.connect('clicked', startReading);
+    }
+
+    const resetReading = () => {
+      pauseReading();
+      state.renderedTextPos = -1;
+      renderedText.set_text(state.defaultPhrase);
+    }
+
+    const readingLoop = () => {
+      if (state.renderedTextPos !== state.textWords.length-1 && state.isReading === true){  
+        state.renderedTextPos++;
+        renderedText.set_text(state.textWords[state.renderedTextPos]);
+  
+        if (state.renderedTextPos === state.textWords.length-1) {
+          GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(state.wordsPerMinute/60), resetReading);
+        } else {
+          GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(state.wordsPerMinute/60), readingLoop);
+        }
+      } else {
+        state.isReading = false;
+      }
+    }
+
+    let startButton = new Gtk.Button({ iconName: "media-playback-start-symbolic" });
+    let startButtonClick = startButton.connect('clicked', startReading);
+
+    let resetButton = new Gtk.Button({ iconName: "edit-undo-symbolic" });
+    let resetButtonClick = resetButton.connect('clicked', resetReading);
+
+    controls.append(startButton);
+    controls.append(resetButton);
+    return controls;
   }
 
-  let startButton = new Gtk.Button({ iconName: "media-playback-start-symbolic" });
-  let startButtonClick = startButton.connect('clicked', startReading);
+  let actionBar = (renderedText) => {
+    let actionBar = new Gtk.ActionBar();
+    actionBar.set_center_widget(controls(renderedText));
+    return actionBar;
+  }
 
-  let resetButton = new Gtk.Button({ iconName: "edit-undo-symbolic" });
-  let resetButtonClick = resetButton.connect('clicked', resetReading);
-
-  let buttonBox = new Gtk.Box();
-  buttonBox.add_css_class("linked");
-  buttonBox.append(startButton);
-  buttonBox.append(resetButton);
-
-  let renderedWord = new Gtk.Label();
-  renderedWord.add_css_class("large-title");
-  renderedWord.set_text(defaultPhrase);
+  let contentBox = () => {
+    let contentBox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL });
+    let renderedText = text();
+    contentBox.append(renderedText)
+    contentBox.append(actionBar(renderedText))
+    return contentBox;
+  }
   
-  let header = new Gtk.HeaderBar();
-  header.pack_start(buttonBox);
-
-  let appWindow = new Gtk.ApplicationWindow({
-    application: app,
-    title: "Fread",
-    defaultHeight: 400,
-    defaultWidth: 600
-  });
-  appWindow.set_titlebar(header);
-  appWindow.set_child(renderedWord);
-  appWindow.present();
+  let window = () => {
+    let window = new Gtk.ApplicationWindow({
+      application: app,
+      title: "Fread",
+      defaultHeight: 400,
+      defaultWidth: 600
+    });
+    window.set_titlebar(header());
+    window.set_child(contentBox());
+    window.present();
+  }
+  window()
 
 });
 
