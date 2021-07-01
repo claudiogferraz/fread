@@ -1,7 +1,9 @@
 <div align="center">
   <br>
   <img src="https://github.com/gomescodes/fread/blob/main/assets/logo.svg" width=360></img>
-  <br><br>
+  <br>
+  <img alt="Fread app screenshot." src="https://github.com/gomescodes/fread/blob/main/assets/screenshot.png"  width="700"/>
+  <br>
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge" />
   <img alt="GJS" src="https://img.shields.io/badge/GJS-blue?style=for-the-badge" />
   <img alt="GTK4" src="https://img.shields.io/badge/GTK-4-black?style=for-the-badge" />
