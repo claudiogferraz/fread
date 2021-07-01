@@ -10,11 +10,12 @@ app.connect('activate', () => {
     isReading: 0,
     textWords: ["No", "text"],
     renderedTextPos: -1,
-    wordsPerMinute: 200
+    wordsPerMinute: 265
   }
 
   let header = () => {
-    let textButton = new Gtk.Button({label: "Edit Text"});
+    let textButton = new Gtk.ToggleButton({ iconName: "text-editor-symbolic" });
+    textButton.set_tooltip_text("Set the text you'll read.");
     let header = new Gtk.HeaderBar();
     header.pack_start(textButton);
     return header;
@@ -69,18 +70,45 @@ app.connect('activate', () => {
 
     let startButton = new Gtk.Button({ iconName: "media-playback-start-symbolic" });
     let startButtonClick = startButton.connect('clicked', startReading);
+    startButton.set_tooltip_text("Start reading.");
 
     let resetButton = new Gtk.Button({ iconName: "edit-undo-symbolic" });
     let resetButtonClick = resetButton.connect('clicked', resetReading);
+    resetButton.set_tooltip_text("Reset reading progress.");
 
+    let prevButton = new Gtk.Button({ iconName: "go-previous-symbolic" });
+    prevButton.set_tooltip_text("Back to previous word.");
+    // let nextButton = new Gtk.Button({ iconName: "go-next-symbolic" });
+
+    controls.append(prevButton);
     controls.append(startButton);
+    // controls.append(nextButton);
     controls.append(resetButton);
     return controls;
   }
 
   let actionBar = (renderedText) => {
     let actionBar = new Gtk.ActionBar();
+
     actionBar.set_center_widget(controls(renderedText));
+
+    let bookmarkButton = new Gtk.ToggleButton({ iconName: "user-bookmarks-symbolic" });
+    bookmarkButton.set_tooltip_text("Bookmark word.");
+    actionBar.pack_end(bookmarkButton);
+
+    let wpmInput = new Gtk.SpinButton({
+      numeric: true,
+      adjustment: new Gtk.Adjustment({
+        lower: 1,
+        upper: 1000, 
+        value: state.wordsPerMinute, 
+        stepIncrement: 1, 
+        pageIncrement: 1, 
+      })
+    });
+    let wpmInputLabel = new Gtk.Label({label: "WPM "})
+    actionBar.pack_start(wpmInputLabel);
+    actionBar.pack_start(wpmInput);
     return actionBar;
   }
 
@@ -103,7 +131,8 @@ app.connect('activate', () => {
     window.set_child(contentBox());
     window.present();
   }
-  window()
+
+  window();
 
 });
 
