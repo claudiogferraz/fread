@@ -10,16 +10,43 @@ app.connect('activate', () => {
     isReading: 0,
     textWords: ["No", "text"],
     renderedTextPos: -1,
-    wordsPerMinute: 265
+    wordsPerMinute: 200,
+    bookmark: -1,
   }
 
   let header = () => {
-    let textButton = new Gtk.ToggleButton({ iconName: "text-editor-symbolic" });
-    textButton.set_tooltip_text("Set the text you'll read.");
+    let fileName = new Gtk.Label({ label: "No file selected", xalign: 0 });
+    let fileButton = new Gtk.Button({ iconName: "document-open-symbolic" });
+    fileButton.set_tooltip_text("Select a text file to read.");
+    fileButton.connect('clicked', () => {
+      let dialog = new Gtk.FileChooserDialog({
+        title: "Select a text file",
+        action: Gtk.FileChooserAction.OPEN
+      });
+      dialog.add_button("Cancel", Gtk.ResponseType.CANCEL);
+      dialog.add_button("Open", Gtk.ResponseType.OK);
+      dialog.connect("response", (dialog, response) => {
+        if (response == Gtk.ResponseType.OK) {
+          let file = dialog.get_file();
+          state.fileName = file.get_path();
+          fileName.set_text(state.fileName);
+
+          let textContent = GLib.file_get_contents(state.fileName);
+          // split string into words at spaces and newlines
+          state.textWords = textContent.toString().split(/\s+|\n+/);
+          state.renderedTextPos = 0;
+          state.bookmark = -1;
+        }
+        dialog.close();
+      });
+      dialog.present();
+    });
+
     let header = new Gtk.HeaderBar();
-    header.pack_start(textButton);
+    header.pack_start(fileButton);
+    header.pack_start(fileName);
     return header;
-  }
+  };
 
   let text = () => {
     let text = new Gtk.Label({vexpand: true});
@@ -51,13 +78,14 @@ app.connect('activate', () => {
       pauseReading();
       state.renderedTextPos = -1;
       renderedText.set_text(state.defaultPhrase);
+      renderedText.remove_css_class("title-1");
     }
 
     const readingLoop = () => {
       if (state.renderedTextPos !== state.textWords.length-1 && state.isReading === true){  
         state.renderedTextPos++;
         renderedText.set_text(state.textWords[state.renderedTextPos]);
-  
+        renderedText.add_css_class("title-1");
         if (state.renderedTextPos === state.textWords.length-1) {
           GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000/(state.wordsPerMinute/60), resetReading);
         } else {
@@ -94,6 +122,13 @@ app.connect('activate', () => {
 
     let bookmarkButton = new Gtk.ToggleButton({ iconName: "user-bookmarks-symbolic" });
     bookmarkButton.set_tooltip_text("Bookmark word.");
+    bookmarkButton.connect("toggled", () => {
+      if (bookmarkButton.get_active()) {
+        state.bookmark = state.renderedTextPos;
+      } else {
+        state.bookmark = -1;
+      }
+    });
     actionBar.pack_end(bookmarkButton);
 
     let wpmInput = new Gtk.SpinButton({
@@ -107,6 +142,11 @@ app.connect('activate', () => {
       })
     });
     let wpmInputLabel = new Gtk.Label({label: "WPM "})
+    wpmInput.set_tooltip_text("Words per minute.");
+    wpmInput.connect("value-changed", (wpmInput) => {
+      state.wordsPerMinute = wpmInput.get_value();
+    });
+
     actionBar.pack_start(wpmInputLabel);
     actionBar.pack_start(wpmInput);
     return actionBar;
