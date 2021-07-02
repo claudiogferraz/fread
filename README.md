@@ -7,7 +7,7 @@
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge" />
   <img alt="Node-GTK" src="https://img.shields.io/badge/Node--GTK-brightgreen?style=for-the-badge" />
   <img alt="GTK4" src="https://img.shields.io/badge/GTK-4-black?style=for-the-badge" />
-  <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
+  <img alt="MIT License" src="https://img.shields.io/badge/MIT--License-blue?style=for-the-badge" />
   <br>
 </div>
 
