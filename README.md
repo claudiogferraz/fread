@@ -5,7 +5,7 @@
   <img alt="Fread app screenshot." src="https://github.com/gomescodes/fread/blob/main/assets/screenshot.png"  width="700"/>
   <br>
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ff0?style=for-the-badge" />
-  <img alt="GJS" src="https://img.shields.io/badge/GJS-blue?style=for-the-badge" />
+  <img alt="Node-GTK" src="https://img.shields.io/badge/Node--GTK-brightgreen?style=for-the-badge" />
   <img alt="GTK4" src="https://img.shields.io/badge/GTK-4-black?style=for-the-badge" />
   <img alt="MIT License" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
   <br>
@@ -38,7 +38,8 @@ Just send a commit and I'll approve if it works and fits the project.
 
 ## Tech Stack
 
-- JavaScript / GJS
+- JavaScript
+- Node-GTK
 - GTK4
 ## License
 
