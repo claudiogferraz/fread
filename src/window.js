@@ -204,7 +204,7 @@ module.exports.createWindow = (app, onQuit) => {
     wpmInput.on('value-changed', () => {
       state.wordsPerMinute = wpmInput.getValueAsInt();
     });
-    let wpmLabel = new Gtk.Label({ label: "Words per minute: " });
+    let wpmLabel = new Gtk.Label({ label: "WPM " });
     actionBar.packStart(wpmLabel);
     actionBar.packStart(wpmInput);
     return actionBar;
