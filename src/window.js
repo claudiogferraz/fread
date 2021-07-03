@@ -32,7 +32,7 @@ module.exports.createWindow = (app, onQuit) => {
   
     while (x--) {
       if (arr[x] === 10) {
-        arr.splice(arr.indexOf(10), 1);
+        arr[x] = 32;
       } else if (arr[x] === 13) {
         arr.splice(arr.indexOf(13), 1);
       }
@@ -112,16 +112,6 @@ module.exports.createWindow = (app, onQuit) => {
     let controls = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL});
     controls.addCssClass("linked");
   
-    const prevWord = () => {
-      if (state.isReading) {
-        pauseReading();
-        if (state.renderedTextPos > 0) {
-          state.renderedTextPos--;
-          text.setText(getActiveWord());
-        }
-      }
-    };
-
     const startReading = () => {
       clearTimeout(loopTimeout);
       state.isReading = true;
@@ -136,8 +126,8 @@ module.exports.createWindow = (app, onQuit) => {
     }
 
     const pauseReading = () => {
-      clearTimeout(loopTimeout);
       state.isReading = false;
+      clearTimeout(loopTimeout);
       playButton.setIconName("media-playback-start-symbolic");
       playButton.setTooltipText("Resume reading.");
       playButton.off('clicked', pauseReading);
@@ -146,11 +136,22 @@ module.exports.createWindow = (app, onQuit) => {
 
     const resetReading = () => {
       pauseReading();
-      playButton.setTooltipText("Start reading.");
       state.renderedTextPos = -1;
       text.setText(state.defaultPhrase);
       text.removeCssClass("title-1");
+      playButton.setTooltipText("Start reading.");
     }
+
+    const prevWord = () => {
+      pauseReading();
+      if (state.renderedTextPos > 0) {
+        let newPos = state.renderedTextPos - 1;
+        state.renderedTextPos = newPos;
+        text.setText(getActiveWord());
+      } else {
+        resetReading();
+      }
+    };
 
     let loopTimeout;
 
@@ -166,7 +167,9 @@ module.exports.createWindow = (app, onQuit) => {
           loopTimeout = setTimeout(playLoop, 1000/(state.wordsPerMinute/60));
         }
       } else {
+        clearTimeout(loopTimeout);
         state.isReading = false;
+        pauseReading();
       }
     }
 
@@ -176,7 +179,7 @@ module.exports.createWindow = (app, onQuit) => {
 
     let playButton = new Gtk.Button({ icon_name: "media-playback-start-symbolic" });
     playButton.setTooltipText("Start reading.");
-    let playButtonClick = playButton.on('clicked', startReading);
+    playButton.on('clicked', startReading);
 
     let resetButton = new Gtk.Button({ icon_name: "edit-clear-symbolic" });
     resetButton.setTooltipText("Reset reading progress.");
