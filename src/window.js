@@ -26,10 +26,23 @@ module.exports.createWindow = (app, onQuit) => {
   }
 
   const indexOfAllSpaces = (arr) => {
+    state.textByteArray = [];
+
+    var x = arr.length;
+  
+    while (x--) {
+      if (arr[x] === 10) {
+        arr.splice(arr.indexOf(10), 1);
+      } else if (arr[x] === 13) {
+        arr.splice(arr.indexOf(13), 1);
+      }
+    }
+
+    state.textByteArray = [...arr];
     let i = 0;
     let result = [];
     while (i < arr.length) {
-      if (arr[i] === 32 || arr[i] === 10 || arr[i] === 13) {
+      if (arr[i] === 32) {
         result.push(i);
       }
       i++;
@@ -80,13 +93,13 @@ module.exports.createWindow = (app, onQuit) => {
     let wordValues = [];
     let word = "";
     if (state.renderedTextPos > 0 && state.renderedTextPos < state.spacesIndexes.length-1) {
-      wordValues = GLib.fileGetContents(state.fileName)[1].slice(state.spacesIndexes[state.renderedTextPos-1], state.spacesIndexes[state.renderedTextPos]);
+      wordValues = state.textByteArray.slice(state.spacesIndexes[state.renderedTextPos-1], state.spacesIndexes[state.renderedTextPos]);
       for (let i=0; i < wordValues.length; i++) {
         let c = wordValues[i];
         word = word + String.fromCharCode(c);
       }
     } else {
-      wordValues = GLib.fileGetContents(state.fileName)[1].slice(0, state.spacesIndexes[0]);
+      wordValues = state.textByteArray.slice(0, state.spacesIndexes[0]);
       for (let i=0; i < wordValues.length; i++) {
         let c = wordValues[i];
         word = word + String.fromCharCode(c);
