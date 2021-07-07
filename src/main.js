@@ -1,7 +1,7 @@
 const gi = require('node-gtk')
 const GLib = gi.require('GLib', '2.0')
 const Gtk = gi.require('Gtk', '4.0')
-const window = require('./window')
+const Window = require('./window');
 
 
 const loop = GLib.MainLoop.new(null, false)
@@ -14,7 +14,9 @@ console.log('Finished with status:', status)
 function onActivate() {
   gi.startLoop()
   Gtk.init()
-  window.createWindow(app, onQuit)
+  const win = new Window(app)
+  win.on('close-request', onQuit)
+  app.addWindow(win)
   loop.run()
 }
 

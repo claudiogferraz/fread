@@ -1,10 +1,39 @@
 const gi = require('node-gtk')
 const Gtk = gi.require('Gtk', '4.0')
-const GLib = gi.require('GLib', '2.0')
+const HeaderBar = require('./headerBar')
+const Word = require('./word')
 
-Gtk.init()
+module.exports = class Window extends Gtk.ApplicationWindow {
+  constructor (props) {
+    super(props)
+    this.setApplication(props.app)
+    this.setTitle('Fread')
+    this.setDefaultSize(600, 400)
 
-module.exports.createWindow = (app, onQuit) => {
+    let headerBar = new HeaderBar(props.app)
+
+    this.setTitlebar(headerBar)
+
+    let word = new Word("Add a text to read.")
+    
+    this.setChild(word)
+    
+    this.present()
+  }
+}
+
+// const open = (app, onQuit) => {
+//   win.setApplication(app)
+//   let onQuitFunc = onQuit;
+//   win.on('close-request', ()=>{
+//     onQuitFunc()
+//   })
+//   win.present();
+// }
+
+
+/*
+const ugabuga = (app, onQuit) => {
   let window = new Gtk.ApplicationWindow({
     application: app,
     title: "Fread",
@@ -88,7 +117,6 @@ module.exports.createWindow = (app, onQuit) => {
     return header;
   };
 
-  // get active word inside byte array from start space to end space
   const getActiveWord = () => {
     let wordValues = [];
     let word = "";
@@ -246,3 +274,4 @@ module.exports.createWindow = (app, onQuit) => {
 
   return window;
 };
+*/
